@@ -301,7 +301,7 @@ export default function App() {
       path === "/verify-email";
     const showRefresh = !isAuthShell && (path === "/settings" || path.startsWith("/settings/"));
     return (
-      <div className="min-h-screen bg-[var(--color-bg)]">
+      <div className="min-h-screen bg-(--color-bg)">
         <NavigationProgressBar />
         <NavigationLoadingOverlay />
         <div data-page-refresh-root>
@@ -333,14 +333,14 @@ export default function App() {
         as="a"
         href="#main-content"
         variant="primary"
-        className="absolute left-4 top-4 z-[100] min-h-[44px] -translate-y-[200%] shadow-lg outline-none ring-2 ring-[var(--color-primary)]/40 ring-offset-2 transition-transform focus:translate-y-0 dark:ring-offset-slate-900"
+        className="absolute left-4 top-4 z-100 min-h-11 translate-y-[-200%] shadow-lg outline-none ring-2 ring-(--color-primary)/40 ring-offset-2 transition-transform focus:translate-y-0 dark:ring-offset-slate-900"
       >
         Skip to main content
       </Button>
       {/* Mobile Drawer Backdrop */}
       {mobileSidebarOpen && (
         <div
-     className="fixed inset-0 z-[70] transition-opacity lg:hidden"
+     className="fixed inset-0 z-70 transition-opacity lg:hidden"
           onClick={() => setMobileSidebarOpen(false)}
           aria-hidden="true"
         />
@@ -348,7 +348,7 @@ export default function App() {
 
       {!isDesktopNav && mobileSidebarOpen ? (
         <div
-          className="fixed inset-0 z-[70] bg-slate-950/45 transition-opacity"
+          className="fixed inset-0 z-70 bg-slate-950/45 transition-opacity"
           onClick={() => setMobileSidebarOpen(false)}
           aria-hidden="true"
         />
@@ -357,8 +357,8 @@ export default function App() {
         id="app-sidebar"
         className={`flex h-full min-h-0 shrink-0 flex-col overflow-visible transition-[width,transform] duration-300 ease-in-out ${
           isDesktopNav
-            ? `relative z-40 ${isLaptop && sidebarCollapsed ? "w-[72px]" : "w-[260px]"}`
-            : `fixed inset-y-0 left-0 z-[75] w-[280px] max-w-[85vw] shadow-2xl ${
+            ? `relative z-40 ${isLaptop && sidebarCollapsed ? "w-18" : "w-65"}`
+            : `fixed inset-y-0 left-0 z-75 w-70 max-w-[85vw] shadow-2xl ${
                 mobileSidebarOpen ? "translate-x-0" : "-translate-x-full pointer-events-none"
               }`
         }`}
@@ -391,7 +391,7 @@ export default function App() {
               : "overflow-y-auto"
           }`}
         >
-          <div className="sticky top-0 z-[60] shrink-0">
+          <div className="sticky top-0 z-60 shrink-0">
             <Navbar
               onOpenSidebar={!isDesktopNav ? () => setMobileSidebarOpen(true) : undefined}
               onToggleSidebar={isLaptop ? toggleSidebar : undefined}
@@ -435,7 +435,7 @@ export default function App() {
           <div
             className={`app-shell-fab-stack pointer-events-none fixed bottom-5 z-50 flex flex-col items-end gap-3 pb-[env(safe-area-inset-bottom,0px)] sm:bottom-6 max-lg:bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] ${
               isSettings
-                ? "bottom-28 sm:bottom-28 lg:bottom-28 max-lg:bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] right-[var(--space-4)] sm:right-[var(--space-6)] lg:right-[var(--space-8)]"
+                ? "bottom-28 sm:bottom-28 lg:bottom-28 max-lg:bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] right-(--space-4) sm:right-(--space-6) lg:right-(--space-8)"
                 : "right-5 sm:right-6"
             }`}
           >

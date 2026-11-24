@@ -473,19 +473,15 @@ def on_startup():
         return
 
     from app.services.email_service import log_smtp_startup_status
+    log_smtp_startup_status()
+    _initialize_database_and_seed()
+
     from app.services.automation.scheduler import start_automation_scheduler
 
-    log_smtp_startup_status()
     start_automation_scheduler()
 
 
-@app.on_event("shutdown")
-def on_shutdown():
-    """Stop the in-process automation scheduler and release advisory locks cleanly."""
-    from app.services.automation.scheduler import stop_automation_scheduler
-
-    stop_automation_scheduler(join_timeout=5.0)
-
+def _initialize_database_and_seed():
     # Production schema is managed exclusively by Alembic — never create_all / runtime DDL.
     if not settings.is_production:
         try:
@@ -620,6 +616,14 @@ def on_shutdown():
             prefix,
             settings.openai_model,
         )
+
+
+@app.on_event("shutdown")
+def on_shutdown():
+    """Stop the in-process automation scheduler and release advisory locks cleanly."""
+    from app.services.automation.scheduler import stop_automation_scheduler
+
+    stop_automation_scheduler(join_timeout=5.0)
 
 
 app.include_router(settings_api_router)

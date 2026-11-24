@@ -5,9 +5,11 @@ Requires:
   ENVIRONMENT=development
   ENABLE_LOCAL_DEMO_LOGIN=true
   LOCAL_DEMO_PASSWORD in environment or backend/.env
-  PostgreSQL: bharathi_erp @ bharathi_user (see verify_bharathi_db_connection.py)
+  PostgreSQL: bharathi_erp @ bharathi_user, or the explicitly enabled local
+  SQLite database backend/bharathi_local_dev.db
 
-Does not modify non-demo users or other databases.
+Does not modify non-demo users or other databases. SQLite use is restricted to
+the local development database and requires ALLOW_SQLITE_RUNTIME=1.
 """
 
 from __future__ import annotations
@@ -36,6 +38,39 @@ from app.services.auth_service import hash_password
 
 
 def _verify_database(engine) -> None:
+    if engine.dialect.name == "sqlite":
+        settings = get_settings()
+        if (
+            settings.environment.strip().lower() != "development"
+            or not settings.allow_sqlite_runtime
+        ):
+            raise SystemExit(
+                "Refusing SQLite demo-user setup unless ENVIRONMENT=development "
+                "and ALLOW_SQLITE_RUNTIME=1."
+            )
+
+        database = engine.url.database
+        if not database or database == ":memory:":
+            raise SystemExit(
+                "Refusing SQLite demo-user setup without the local development database file."
+            )
+        database_path = Path(database)
+        if not database_path.is_absolute():
+            database_path = (Path.cwd() / database_path).resolve()
+        allowed_path = (BACKEND_ROOT / "bharathi_local_dev.db").resolve()
+        if database_path != allowed_path:
+            raise SystemExit(
+                "Refusing SQLite demo-user setup outside backend/bharathi_local_dev.db."
+            )
+
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        print("OK local SQLite development database")
+        return
+
+    if engine.dialect.name != "postgresql":
+        raise SystemExit("Refusing demo-user setup for an unsupported database.")
+
     with engine.connect() as conn:
         row = conn.execute(
             text("SELECT current_database(), current_user, inet_server_port()")

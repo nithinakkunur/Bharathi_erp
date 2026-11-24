@@ -2,7 +2,7 @@
 
 import os
 import pytest
-from sqlalchemy import select
+from sqlalchemy import create_engine, select
 
 from app.core.config import get_settings
 from app.core.database import SessionLocal
@@ -16,6 +16,7 @@ from app.core.seed_tenant import seed_tenant
 from app.models.role import Role
 from app.models.user import User
 from app.services.auth_service import hash_password
+from scripts.setup_local_demo_users import _verify_database
 
 _DEMO_PASSWORD = "DemoPassw0rd!12"
 
@@ -174,6 +175,32 @@ def test_local_demo_status_endpoint(client, demo_login_env):
     assert "Admin" in body["roles"]
     assert "Store Manager" in body["roles"]
     assert "password" not in body
+
+
+def test_demo_user_setup_allows_only_explicit_local_sqlite_database(tmp_path, monkeypatch):
+    import scripts.setup_local_demo_users as demo_setup
+
+    monkeypatch.setenv("ENVIRONMENT", "development")
+    monkeypatch.setenv("ALLOW_SQLITE_RUNTIME", "1")
+    monkeypatch.setattr(demo_setup, "BACKEND_ROOT", tmp_path)
+    get_settings.cache_clear()
+
+    allowed_path = tmp_path / "bharathi_local_dev.db"
+    allowed_engine = create_engine(f"sqlite:///{allowed_path}")
+    other_engine = create_engine(f"sqlite:///{tmp_path / 'other.db'}")
+    try:
+        _verify_database(allowed_engine)
+        with pytest.raises(SystemExit, match="outside backend/bharathi_local_dev.db"):
+            _verify_database(other_engine)
+
+        monkeypatch.setenv("ALLOW_SQLITE_RUNTIME", "0")
+        get_settings.cache_clear()
+        with pytest.raises(ValueError, match="ALLOW_SQLITE_RUNTIME=1"):
+            _verify_database(allowed_engine)
+    finally:
+        allowed_engine.dispose()
+        other_engine.dispose()
+        get_settings.cache_clear()
 
 
 def test_demo_login_store_manager_resolves_identity(demo_login_env):

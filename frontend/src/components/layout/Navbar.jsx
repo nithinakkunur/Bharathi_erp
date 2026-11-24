@@ -220,7 +220,7 @@ export default function Navbar({ onOpenSidebar, onToggleSidebar, sidebarCollapse
                 )}
               </div>
               <div className="app-navbar__profile-text hidden min-w-0 text-left lg:block">
-                <p className="app-navbar__profile-name text-sm font-semibold leading-tight text-[var(--color-text)]">
+                <p className="app-navbar__profile-name text-sm font-semibold leading-tight text-(--color-text)">
                   {displayName}
                 </p>
                 {displayRole ? (
@@ -230,7 +230,7 @@ export default function Navbar({ onOpenSidebar, onToggleSidebar, sidebarCollapse
                 ) : null}
               </div>
               <ChevronDown
-                className="hidden h-4 w-4 shrink-0 text-[var(--color-text-icon)] md:block"
+                className="hidden h-4 w-4 shrink-0 text-(--color-text-icon) md:block"
                 aria-hidden
               />
             </button>

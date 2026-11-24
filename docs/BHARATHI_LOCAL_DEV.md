@@ -127,7 +127,8 @@ For Bharathi ERP UI review only. Fails closed in production or when disabled.
    - `LOCAL_DEMO_UI_EMAIL=demo@bharathi.local` (optional)
    - `FRONTEND_BASE_URL=http://localhost:5173`
 
-2. Create demo users (PostgreSQL `bharathi_erp` / `bharathi_user` only).
+2. Create demo users in PostgreSQL `bharathi_erp` / `bharathi_user`, or in the
+   explicitly enabled local SQLite database `backend/bharathi_local_dev.db`.
 
    **Re-run after every `LOCAL_DEMO_PASSWORD` change:**
 

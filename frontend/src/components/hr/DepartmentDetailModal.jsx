@@ -70,7 +70,7 @@ export function DepartmentFormModal({ department, onClose, onSave }) {
   const canSave = Boolean((form.code || "").trim()) && Boolean((form.name || "").trim());
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-60 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl border border-slate-200 max-w-2xl w-full p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
         <div className="flex items-start justify-between">
           <div>
@@ -162,7 +162,7 @@ export function DepartmentFormModal({ department, onClose, onSave }) {
 
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Description</label>
-            <textarea placeholder="Add a short description for this department" value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} className={`${inputClass} min-h-[90px] resize-y`} rows={3} />
+            <textarea placeholder="Add a short description for this department" value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} className={`${inputClass} min-h-22.5 resize-y`} rows={3} />
           </div>
         </div>
 
@@ -263,7 +263,7 @@ export default function DepartmentDetailModal({ department, detail, onClose, onE
               type="button"
               onClick={() => setTab(t.id)}
               className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
-                tab === t.id ? "bg-[var(--color-primary)] text-white" : "text-slate-600 hover:bg-slate-100"
+                tab === t.id ? "bg-(--color-primary) text-white" : "text-slate-600 hover:bg-slate-100"
               }`}
             >
               {t.label}

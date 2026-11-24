@@ -296,7 +296,7 @@ export default function DashboardCheckIn({ variant = "default" }) {
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-3.5 shadow-xs transition sm:flex-row sm:items-center sm:justify-between sm:p-4">
+    <div className="flex flex-col gap-3 rounded-xl border border-(--color-border-soft) bg-(--color-surface) p-3.5 shadow-xs transition sm:flex-row sm:items-center sm:justify-between sm:p-4">
       {/* Left: Employee Info & Live Status */}
       <div className="flex items-center gap-3">
         <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400">
@@ -304,8 +304,8 @@ export default function DashboardCheckIn({ variant = "default" }) {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <p className="text-sm font-semibold text-[var(--color-text)]">{displayName}</p>
-            <span className="rounded bg-[var(--color-surface-muted)] px-1.5 py-0.5 text-[11px] font-medium text-[var(--color-text-muted)]">
+            <p className="text-sm font-semibold text-(--color-text)">{displayName}</p>
+            <span className="rounded bg-(--color-surface-muted) px-1.5 py-0.5 text-[11px] font-medium text-(--color-text-muted)">
               {displayRole}
             </span>
           </div>
@@ -314,11 +314,11 @@ export default function DashboardCheckIn({ variant = "default" }) {
               Checked in today at {checkInTime || "—"}
             </p>
           ) : checkedOut ? (
-            <p className="text-xs text-[var(--color-text-muted)]">
+            <p className="text-xs text-(--color-text-muted)">
               Shift completed • In: {checkInTime || "—"} | Out: {checkOutTime || "—"} ({formattedDuration})
             </p>
           ) : (
-            <p className="text-xs text-[var(--color-text-muted)]">
+            <p className="text-xs text-(--color-text-muted)">
               Not checked in yet today • Click Check In to start your work shift
             </p>
           )}

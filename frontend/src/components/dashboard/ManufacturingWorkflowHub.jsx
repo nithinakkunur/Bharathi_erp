@@ -16,10 +16,10 @@ function WorkflowKpiCard({ label, count, path }) {
   return (
     <Link
       to={path || "/production/work-orders"}
-      className="ui-card block p-3 transition hover:border-[var(--color-primary)]/40 hover:shadow-sm"
+      className="ui-card block p-3 transition hover:border-(--color-primary)/40 hover:shadow-sm"
     >
-      <p className="text-[10px] font-bold uppercase tracking-wide text-[var(--color-text-muted)]">{label}</p>
-      <p className="mt-1 text-2xl font-bold tabular-nums text-[var(--color-text)]">{count ?? 0}</p>
+      <p className="text-[10px] font-bold uppercase tracking-wide text-(--color-text-muted)">{label}</p>
+      <p className="mt-1 text-2xl font-bold tabular-nums text-(--color-text)">{count ?? 0}</p>
     </Link>
   );
 }
@@ -31,7 +31,7 @@ function LiveToggleButton({ expanded, onClick }) {
       onClick={onClick}
       aria-expanded={expanded}
       aria-controls="live-manufacturing-panel"
-      className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-emerald-200/80 bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-emerald-700 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)] active:scale-[0.98] dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+      className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-emerald-200/80 bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-emerald-700 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-primary) active:scale-[0.98] dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
     >
       <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -81,8 +81,8 @@ function ManufacturingWorkflowPanel({ data, onRefresh }) {
     <section id="live-manufacturing-panel" className="ui-card space-y-4 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-text)]">Live Manufacturing Orders</p>
-          <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+          <p className="text-sm font-semibold text-(--color-text)">Live Manufacturing Orders</p>
+          <p className="mt-1 text-sm text-(--color-text-muted)">
             Live manufacturing orders across all teams — counts from PostgreSQL.
           </p>
         </div>
@@ -120,7 +120,7 @@ function ManufacturingWorkflowPanel({ data, onRefresh }) {
 
       {data?.live_cards?.length ? (
         <div className="space-y-2">
-          <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+          <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-(--color-primary)">
             Orders in progress
           </h3>
           <ul className="ui-stack gap-2">
@@ -128,13 +128,13 @@ function ManufacturingWorkflowPanel({ data, onRefresh }) {
               <li key={item.sales_order_id}>
                 <Link
                   to={`/sales/orders/${item.sales_order_id}`}
-                  className="block rounded-lg border border-[var(--color-border-muted)] bg-[var(--color-surface)] p-3 hover:border-[var(--color-primary)]/40"
+                  className="block rounded-lg border border-(--color-border-muted) bg-(--color-surface) p-3 hover:border-(--color-primary)/40"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-sm font-bold text-[var(--color-text)]">{item.job_card_no}</span>
-                    <span className="text-xs font-semibold uppercase text-[var(--color-primary)]">{item.priority}</span>
+                    <span className="text-sm font-bold text-(--color-text)">{item.job_card_no}</span>
+                    <span className="text-xs font-semibold uppercase text-(--color-primary)">{item.priority}</span>
                   </div>
-                  <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                  <p className="mt-1 text-xs text-(--color-text-muted)">
                     {item.customer} · {item.product} · {item.quantity} {item.unit}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1 text-[10px] font-semibold">
@@ -143,12 +143,12 @@ function ManufacturingWorkflowPanel({ data, onRefresh }) {
                         key={step.key}
                         className={
                           step.status === "completed"
-                            ? "text-[var(--color-success)]"
+                            ? "text-(--color-success)"
                             : step.status === "current"
-                              ? "text-[var(--color-primary)]"
+                              ? "text-(--color-primary)"
                               : step.status === "rejected" || step.status === "blocked"
-                                ? "text-[var(--color-danger)]"
-                                : "text-[var(--color-text-faint)]"
+                                ? "text-(--color-danger)"
+                                : "text-(--color-text-faint)"
                         }
                       >
                         {step.label.split(" ")[0]}
@@ -162,7 +162,7 @@ function ManufacturingWorkflowPanel({ data, onRefresh }) {
           </ul>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--color-border)] px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
+        <p className="rounded-lg border border-dashed border-(--color-border) px-4 py-6 text-center text-sm text-(--color-text-muted)">
           No active manufacturing orders. Confirm a sales order to start the workflow.
         </p>
       )}
@@ -232,7 +232,7 @@ export default function ManufacturingWorkflowHub() {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
+        <span className="text-[12px] font-bold uppercase tracking-wider text-(--color-text-muted)">
           Live Manufacturing Workflow
         </span>
         <LiveToggleButton expanded={expanded} onClick={toggleExpanded} />
@@ -252,7 +252,7 @@ export default function ManufacturingWorkflowHub() {
                 </div>
               ) : loadError ? (
                 <div className="ui-card space-y-3 p-4" role="alert">
-                  <p className="text-sm text-[var(--color-danger)]">{loadError}</p>
+                  <p className="text-sm text-(--color-danger)">{loadError}</p>
                   <Button variant="outline" size="sm" onClick={fetchData}>
                     Retry
                   </Button>
